@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silverleaf Ops Insight - Fee Analytics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>🏫 Silverleaf Academy Ops Insight</h1>
+                <p class="subtitle">Fee Collection Analytics & Anomaly Detection</p>
+            </div>
+        </header>
+
+        <main>
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="upload-box">
+                    <h2>Upload Fee Records</h2>
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <div class="file-input-wrapper">
+                            <input type="file" id="csvFile" name="file" accept=".csv" required>
+                            <label for="csvFile">Choose CSV file or drag & drop</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Analyze</button>
+                        <button type="button" class="btn btn-secondary" onclick="loadSampleData()">Load Sample Data</button>
+                    </form>
+                    <p class="hint">Expected columns: campus, student_id, amount_due, amount_paid, last_payment_date</p>
+                </div>
+            </section>
+
+            <!-- Loading State -->
+            <div id="loadingSpinner" class="spinner hidden">
+                <div class="spinner-inner"></div>
+                <p>Processing fee records...</p>
+            </div>
+
+            <!-- Dashboard (Hidden until data loaded) -->
+            <div id="dashboard" class="hidden">
+                <!-- Key Metrics -->
+                <section class="metrics-section">
+                    <h2>Collection Snapshot</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value" id="totalDue">-</div>
+                            <div class="metric-label">Total Due (TZS)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="totalPaid">-</div>
+                            <div class="metric-label">Total Collected (TZS)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="collectionRate">-</div>
+                            <div class="metric-label">Collection Rate</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="outstanding">-</div>
+                            <div class="metric-label">Outstanding (TZS)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="studentCount">-</div>
+                            <div class="metric-label">Students</div>
+                        </div>
+                        <div class="metric-card alert">
+                            <div class="metric-value" id="anomalyCount">-</div>
+                            <div class="metric-label">Anomalies Flagged</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Collection by Campus -->
+                <section class="chart-section">
+                    <h2>Collection by Campus</h2>
+                    <div class="chart-container">
+                        <canvas id="campusChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Campus Table -->
+                <section class="table-section">
+                    <h2>Campus Breakdown</h2>
+                    <table id="campusTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Campus</th>
+                                <th>Students</th>
+                                <th>Total Due (TZS)</th>
+                                <th>Collected (TZS)</th>
+                                <th>Outstanding (TZS)</th>
+                                <th>Collection Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody id="campusTableBody">
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Anomalies Section -->
+                <section class="anomalies-section">
+                    <h2>🚨 Flagged Anomalies</h2>
+                    <div id="anomaliesContainer">
+                        <!-- Anomalies populated here -->
+                    </div>
+                </section>
+
+                <!-- Data Summary -->
+                <section class="summary-section">
+                    <h2>Report Generated</h2>
+                    <p id="reportTimestamp">-</p>
+                </section>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="error-message hidden"></div>
+        </main>
+
+        <footer>
+            <p>Silverleaf Academy • Ops Insight Tool v0.1</p>
+            <p>Built for Tanzanian context: low-bandwidth deployment, actionable analytics</p>
+        </footer>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
