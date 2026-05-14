@@ -29,6 +29,12 @@ streamlit run streamlit_app.py
 
 Then open http://localhost:8501
 
+### Live Production
+
+Visit the link below to access the live dashboard
+
+https://silverleaf-ops-insight.onrender.com
+
 ## Features
 
 - **Fee Collection Analytics**: Track collection rates by campus
